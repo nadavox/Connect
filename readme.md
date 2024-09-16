@@ -1,3 +1,11 @@
+### before running the app:
+1. make sure that you have docker installed on your machine.
+2. make sure that you have docker-compose installed on your machine.
+3. make sure that for each request you have the api-key header:
+```bash
+api-key: api-key-Connect
+```
+
 # how to run the app:
 1. clone the repository.
 2. open the terminal and navigate to the project folder.
@@ -11,13 +19,6 @@ docker-compose up --build
 docker-compose down -v 
 ```
 
-### before running the app:
-1. make sure that you have docker installed on your machine.
-2. make sure that you have docker-compose installed on your machine.
-3. make sure that for each request you have the api-key header:
-```bash
-api-key: api-key-Connect
-```
 
 after you attached the api-key header to the request, you can use the following endpoints:
 1. POST /items - to add a new item.
