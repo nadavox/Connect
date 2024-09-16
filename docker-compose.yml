@@ -1,0 +1,39 @@
+
+services:
+  connect_app:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app  
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development 
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_Connect_db
+    environment:
+      POSTGRES_USER: Connect
+      POSTGRES_PASSWORD: Connect
+      POSTGRES_DB: Connect_DB
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:
