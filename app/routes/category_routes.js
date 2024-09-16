@@ -21,6 +21,11 @@ const is_id_valid = async (categoryId) => {
 
 router.get("/:id", async (req, res) => {
   const categoryId = req.params.id;
+  if (!categoryId) {
+    return res.status(400).json({
+      error: "Missing required parameter: id",
+    });
+  }
   const is_valid = await is_id_valid(categoryId);
   if (!is_valid.valid) {
     return res.status(400).json({

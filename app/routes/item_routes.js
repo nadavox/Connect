@@ -47,6 +47,11 @@ router.get("/search", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({
+      error: "Missing required parameter: id",
+    });
+  }
   const get_item_query = `SELECT * FROM items WHERE id = $1`;
   const get_item_result = await pool.query(get_item_query, [id]);
   if (get_item_result.rows.length === 0) {
