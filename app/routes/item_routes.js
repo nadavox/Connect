@@ -7,7 +7,6 @@ const get_volumes_per_item = async (item) => {
   const get_items_volume_result = await pool.query(get_items_volume_query, [
     item.category_id,
   ]);
-  // add get_items_volume_result.rows to item object
   item.volumes = get_items_volume_result.rows;
   return item;
 };
@@ -20,14 +19,12 @@ router.get("/search", async (req, res) => {
       throw new Error("Query parameter 'query' is required");
     }
     words = search_string.split(" ");
-    // check if each word represent item or category
     const get_item_query = `SELECT * FROM items WHERE name = $1`;
     const get_category_query = `SELECT * FROM categories WHERE title = $1`;
     for (let word of words) {
       const get_item_result = await pool.query(get_item_query, [word]);
       if (get_item_result.rows.length > 0) {
         // word is an item
-        console.log(get_item_result.rows[0]);
         const item = await get_volumes_per_item(get_item_result.rows[0]);
         data.items.push(item);
         continue;
